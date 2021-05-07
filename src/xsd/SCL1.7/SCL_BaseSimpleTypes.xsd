@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://www.iec.ch/61850/2003/SCL" targetNamespace="http://www.iec.ch/61850/2003/SCL" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.7">
+	<xs:annotation>
+		<xs:documentation xml:lang="en">
+			COPYRIGHT (c) IEC, 2017. This version of this XSD is part of IEC 61850-6:2003; see the IEC 61850-6:2003 for full legal notices.In case of any differences between the here-below code and the IEC published content, the here-below definition supersedes the IEC publication; it may contain updates. See history files. The whole document has to be taken into account to have a full description of this code component.
+			See www.iec.ch/CCv1 for copyright details
+		</xs:documentation>
+		<xs:documentation xml:lang="en">
+			Version 1.7. Release 2014/03/11.
+		</xs:documentation>
+	</xs:annotation>
+	<xs:simpleType name="tRef">
+		<xs:restriction base="xs:normalizedString">
+			<xs:pattern value=".+/.+/.+/.+"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="tAnyName">
+		<xs:restriction base="xs:normalizedString"/>
+	</xs:simpleType>
+	<xs:simpleType name="tName">
+		<xs:restriction base="tAnyName">
+			<xs:minLength value="1"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="tRestrName">
+		<xs:restriction base="xs:Name">
+			<xs:pattern value="[\d,\p{L}]+"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="tRestrLdName">
+		<xs:restriction base="xs:Name">
+			<xs:maxLength value="64"/>
+			<xs:pattern value="\p{L}[\d,\p{L}]*"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="tRestrName1stU">
+		<xs:restriction base="xs:Name">
+			<xs:pattern value="\p{Lu}[\d,\p{L}]*"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="tRestrName1stL">
+		<xs:restriction base="xs:Name">
+			<xs:pattern value="\p{Ll}[\d,\p{L}]*"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="tPAddr">
+		<xs:restriction base="xs:normalizedString">
+			<xs:minLength value="1"/>
+		</xs:restriction>
+	</xs:simpleType>
+</xs:schema>
