@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<IECManifest xmlns="http://www.iec.ch/CC/2017/IECManifest" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.iec.ch/CC/2017/IECManifest IECManifest.xsd">
+	<Copyright>
+		<Notice>
+			COPYRIGHT (c) IEC, 2018. This version of this XSD is part of IEC 61850-6:2009/AMD1:2018; see the IEC 61850-6:2009/AMD1:2018 for full legal notices. In case of any differences between the here-below code and the IEC published content, the here-below definition supersedes the IEC publication; it may contain updates. See history files. The whole document has to be taken into account to have a full description of this code component.
+			See www.iec.ch/CCv1 for copyright details.
+		</Notice>
+		<License uri="www.iec.ch/CCv1">IEC License</License>
+	</Copyright>
+	<CodeComponent id="IEC_61850-6.2007B4.SCL.XSD" name="IEC 61850-6 SCL schema V2007B4" content="full" date="2018-01-22">
+		<Publication name="IEC_61850-6.2018_ed2.1" comment="Configuration description language for communication in power utility automation systems related to IEDs"/>
+		<File name="SCL.xsd" category="normative" content="full"/>
+		<File name="SCL_Substation.xsd" category="normative" content="full"/>
+		<File name="SCL_Communication.xsd" category="normative" content="full"/>
+		<File name="SCL_IED.xsd" category="normative" content="full"/>
+		<File name="SCL_DataTypeTemplates.xsd" category="normative" content="full"/>
+		<File name="SCL_BaseTypes.xsd" category="normative" content="full"/>
+		<File name="SCL_BaseSimpleTypes.xsd" category="normative" content="full"/>
+		<File name="SCL_Enums.xsd" category="normative" content="full"/>
+		<File name="SCL.Doc.HTML.zip" category="normative" content="full" comment="Zip archive containing the HTML documentation of the SCL. Contains the 'SCL.html' file and all related pictures"/>
+		<HistoryFile name="history.2007B4.txt" startingDate="2014-06-11" endingDate="2017-07-05" startingVersion="SCL.XSD.v2007B" endingVersion="SCL.XSD.v2007B4"/>
+	</CodeComponent>
+</IECManifest>

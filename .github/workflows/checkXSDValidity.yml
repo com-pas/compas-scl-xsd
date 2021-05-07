@@ -1,0 +1,17 @@
+name: Check XSD validity
+on:
+  schedule:
+    #  * is a special character in YAML so you have to quote this string
+    - cron: "0 0 1,7,14,21,28 * *"
+
+jobs:
+  Check-XSD-Validity:
+    runs-on: ubuntu-latest
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v2
+      # Runs a set of commands using the runners shell
+      - name: Run maven script
+        uses: guillonapa/action-maven-cli@master
+        with:
+          lifecycle: "initialize"
