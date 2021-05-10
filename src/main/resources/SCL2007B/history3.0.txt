@@ -1,0 +1,419 @@
+===============================================================
+REVISION HISTORY FOR THE SCL REVISION "2006"
+FROM April 30, 2006.
+===============================================================
+
+Base version: 2.0
+
+
+CF 2006/04/30:
+  - SCL*.xsd: schema version "3.0".
+  - SCL.xsd: attribute "version" of root element "SCL" made madatory (without default value).
+  - SCL_BaseTypes.xsd: tHeader: value "FuncName" of attribute "nameStructure" is removed.
+  - SCL_BaseTypes.xsd: tPrivate: attribute "type" now required (Tissue 272).
+  - SCL_IED.xsd: agOptFields: removed optional attributes "bufOvfl" and "segmentation".
+  - SCL_IED.xsd: tReportControl: attribute "rptID" now of type tName, so that the empty string is not allowed (Tissue 245).
+
+
+CF 2006/05/02:
+  - SCL_Enums.xsd: Tissue 212: Commented out tExtensionBasicTypeEnum. tBasicTypeEnum is now only an alias (in practice a restriction) of tPredefinedBasicTypeEnum.
+
+
+CF 2006/05/17:
+  - SCL_IED.xsd: (related to Tissue 186) added optional boolean attribute "fccb" with default value false to "tClientServices".
+
+
+CF 2006/05/19:
+  - SCL_BaseTypes.xsd: in "agDesc", attribute "desc" now has a default value, the empty string.
+
+
+CF 2006/08/14:
+  - SCL_Substation.xsd: tTerminal: renamed optional attribute "starPoint" to "neutralPoint".
+  - SCL_Enums.xsd: (Tissue 317) tPhaseEnum: added enumeration values "AB", "BC", and "CA" at the end. Shall be used only for a VT.
+  - SCL_Enums.xsd: added value "Hz/s" to enumeration "tSIUnitEnum".
+
+
+CF 2006/08/17:
+  - SCL_IED.xsd: added attribute mustUnderstand (boolean, mandatory, fixed true) to tFCCB.
+
+
+CF 2006/08/21:
+  - SCL_BaseSimpleTypes.xsd: tVersion has been renamed tSclVersion is now a year "20xx". New type: tSclRevision that models the sCL schema revision associated with the version (it shall be an uppercase letter).
+  - SCL.xsd: Split attribute "version" on the root SCL element into two attributes: required attribute "version" (of type tSclVersion) with fixed value "2006" and required attribute "revision" (of type tSclRevision) with fixed value "A".
+  - SCL_IED.xsd: tIED: added two optional attributes "originalSclVersion" (a 
+tSclVersion without default value) and "originalSclRevision" (a tSclRevision without default value).
+
+
+CF 2006/09/11:
+  - SCL_DataTypeTemplates.xsd: (Tissue 367) removed field "iedType" from identity constraint "uniqueLNodeType" on the "DataTypeTemplates" element (i.e., LNodeTypes shall be unique based on their "id" only).
+
+
+CF 2006/10/25:
+  - SCL_*: changed the annotation for the schema (and removed IEC copyright).
+
+
+CF 2007/01/24:
+  - SCL_Enums.xsd: (Tissue 425) Added enumeration value "ObjRef" to tPredefinedBasicTypeEnum. This shall be used for the VISIBLE STRING65 defined in Part 8-1 (as well as VISIBLE STRING129).
+
+
+CF 2007/01/30:
+  - SCL_IED.xsd: (Tissue 428, according to FDIS-Draft for IEC 62271-6 Clause 7.2.3, somewhat simplified and more constrained: transformed some elements into attributes; added the following restrictions: serialNumber is a non-empty string that can contain only digits (0..9); commonName is a non-empty normalizedString, that is either "none" or starts with "CN=", so length should be at least 4; idHierarchy is a non-empty normalizedString) Added complex types tCertificate and tCert. tAccessPoint can now have 0 to 7 child GOOSESecurity (of type tCertificate) and 0 to 7 SMVSecurity (of type tCertificate) elements.
+
+
+CF 2007/02/13:
+  - SCL_IED.xsd: (Tissue 465) Added identity constraints uniqueDOIinLN and uniqueDOIinLN0 (within an LN/LN0, there cannot be two DOI with same name), uniqueSDI_DAIinDOI (within an DOI, there cannot be two SDI/DAI with same name), and uniqueSDI_DAIinSDI (within an SDI, there cannot be two SDI/DAI with same name).
+
+
+CF 2007/05/02:
+  - SCL.xsd: Removed the identity constraint "uniqueLDName" from element "SCL": the ldName shall be (only) unique per SubNetwork, and NOT per SCL file. As this cannot be validated with XML Schema, it shall be stated textually in Part 6.
+  - SCL_IED.xsd: Commented out "agDARef" as it is not used anywhere for now.
+  - SCL_IED.xsd: added "tServerAt".
+  - SCL_IED.xsd: "tAccessPoint": added third choice "ServerAt". Added to IED element Key identity constraint "AccessPointInIEDKey" and keyref identity constraint "ServerAtRef2AccessPoint". Commented out the now dupplicate unique identity constraint "uniqueAccessPointInIED" (is taken care of by "AccessPointInIEDKey").
+
+
+CF 2007/05/03:
+  - SCL_IED.xsd: added optional attribute "gi" (with default value true) to tTrgOps.
+  - SCL_IED.xsd: agOptFields: added optional attribute "bufOvfl" with default value true.
+  - SCL_IED.xsd: added optional attribute "desc" (with default value the empty string) to agLDRef. This meanst that ExtRef, Association, and ClientLN now have an optional desc attribute.
+
+
+CF 2007/05/15:
+  - SCL_BaseSimpleTypes.xsd: added tAcsiName, which models the name of an element following Part 7-2 naming rules (e.g., prefix): it shall start with a letter (lower or uppercase) and contain only letters, digits and the underscore '_'. tRestrLdName now restricts the latter (to have a maximal length of 64).
+  - SCL_BaseSimpleTypes.xsd: added tPrefix, which models the prefix of an LN. Accepts the empty string or shall start with a letter (lower or uppercase) and contain only letters, digits and the underscore '_'. No length limit.
+  - SCL_BaseTypes.xsd: added tAcsiNaming, which is like tNaming but whose name attribute is of type tAcsiName.
+  - SCL_IED.xsd: tIED is now an extension of tAcsiNaming (instead of tNaming), i.e., its name is a tAcsiName.
+  - SCL_IED.xsd: tLDevice: attribute inst is now of type tAcsiName (instead of tName).
+  - SCL_IED.xsd: tLN: attribute prefix is now of type tPrefix (instead of tAnyName).
+  - SCL_IED.xsd: tDataSet is now an extension of tAcsiNaming (instead of tNaming), i.e., its name is a tAcsiName.
+  - SCL_IED.xsd: tControl is now an extension of tAcsiNaming (instead of tNaming), i.e., its name is a tAcsiName.
+  - SCL_IED.xsd: tControl: attribute datSet is now of type tAcsiName (instead of tName).
+  - SCL_IED.xsd: agLDRef: attributes iedName and ldInst are now of type tAcsiNaming (instead of tName).
+  - SCL_IED.xsd: agLNRef: attribute prefix is now of type tPrefix (instead of tAnyName).
+  - SCL_IED.xsd: tFCDA: attribute ldInst is now of type tAcsiName (instead of tName), attribute prefix is now of type tPrefix (instead of tAnyName).
+  - SCL_IED.xsd: tFCCB: attribute ldInst is now of type tAcsiName (instead of tName), attribute prefix is now of type tPrefix (instead of tAnyName).
+  - SCL_IED.xsd: tControlWithIEDName: sub-element IEDName is now of type tAcsiName (instead of tName).
+  - SCL_IED.xsd: tAccessPoint now extends tAcsiNaming (instead of tNaming), i.e., its name is a tAcsiName.
+  - SCL_Communication.xsd: tConnectedAP: attributes iedName and apName are now of type tAcsiName (instead of tName).
+  - SCL_Communication.xsd: tControlBlock: attributes ldInst and cbName are now of type tAcsiName (instead of tName).
+  - SCL_Substation.xsd: tLNode: attribute iedName is now of type tAcsiName (instead of tName). Note: attributes prefix and ldInst keep their previously assigned type (tAnyName) and their default value (the empty string) and do not follow the naming pattern (to allow more flexible engineering).
+  - SCL_IED.xsd: tLogControl: attribute logName is now of type tAcsiName (instead of tName).
+  - SCL_IED.xsd: tServerAt: attribute apName is now of type tAcsiName (instead of tName).
+
+
+CF 2007/05/17:
+  - SCL_BaseSimpleTypes.xsd: tPrefix now limited to 6 characters, following the restrictions defined in Part 7-2, Clause 19.2 (prefix + inst <= 7 characters). Note: this change does not apply to the prefix attribute of tLNode (as it is not defined to be a tPrefix, in order to allow more freedom during the early stages of engineering).
+  - SCL_IED.xsd: tIED now extends tUnNaming. Added mandatory attribute "name", a tRestrLdName (i.e., a tAcsiName like before but limited to 64 characters max).
+  - SCL_Substation.xsd: tBay and tVoltageLevel have 0..n child "Function" elements (of type tFunction). Note: this could have been added to the tEquipmentContainer, but then the order of elements for a Substation would be changed for child elements between Function and VoltageLevel.
+  - SCL_IED.xsd: added unique identity constraint "uniqueExtRefInInputs" to "tAnyLN/Inputs".
+  - EnumTypes.xml: changed root element to have correct version and revision attribute values (compatible with SCL 3.0).
+
+
+CF 2007/05/18:
+  - SCL_IED.xsd: modified identity constraint "uniqueExtRefInInputs" to include attribute "intAddr".
+
+
+CF 2007/08/28:
+  - SCL_DataTypeTemplates.xsd: tEnumVal now also includes the agDesc attribute group (i.e., it can have a "desc" attribute, which is optional with the empty string as default value).
+  - SCL.xsd: modified attribute "version" of element "SCL" to have the default value of "2007" (instead of "2006").
+  - SCL_*.xsd: modified comment 'version "2006"' to 'version "2007"'. Updated release date to 2007/08/28.
+
+
+CF 2007/08/29:
+  - deleted SCL_Maintenance.xsd.
+
+
+CF 2007/09/30:
+  - Example file "ExampleT1-1-2005.xml": BDA "Check" is now of type "Check" (instead of BOOLEAN).
+  - SCL_IED.xsd: added optional (boolean) attribute "includeAll" with default value false to "tTrgOps".
+  - SCL_IED.xsd: transferred Log sub-element from tLN0 to tAnyLN. Consequence: some old instance files may not be compliant anymore as the ordering changes (between Log and the other specific sub-elements, like GSEControl, of tLN0). Changed "ExampleT1-1-2005.xml" to be compliant.
+  - SCL_IED.xsd: added optional attribute "name" (no default value) to tLog, of type tRestrLdName. Interpretation: if the name attribute is not given, the application shall set it to the name of the parent LDevice.
+  - SCL_IED.xsd: added identity constraint "providedLogName" to element LN to ensure that any Log of an LN (not LN0) has a name.
+  - SCL_IED.xsd: added identity constraint "uniqueLogName" to tServer (below LDevice) to ensure that there are not two Logs with the same name below a LDevice. However, it is not fool-proof, as there could be a Log in a LN0 (no name => name of LD) and a Log in a LN with the same name as the parent LD.
+
+
+CF 2007/10/04:
+  - SCL_Substation.xsd: tFunction and tSubFunction can now also have 0..n child ConductingEquipment.
+  - SCL_IED.xsd: tAnyLN can now have 0..n (instead of 0..1) Log sub-elements.
+  - SCL_IED.xsd: Modified tLogControl to take into account the fact that a Log can be attached to any LN and that there may be several Logs per LN. Added attributes "ldInst" (mandatory, of type tAcsiName), "prefix" (optional, type tPrefix, default empty string), "lnClass" (optional, type tLNClassEnum, default LLN0), and "lnInst" (optional, type tAnyName, default empty string). Existing attribute "logName" now is of type tRestrLdName (the same type as for tLog.name) instead of tAcsiName and now has a different meaning: it refers to the name of a Log (and not the logical device). Modified example file ExampleT1-1-2005.xml accordingly.
+  - SCL.xsd and SCL_Substation.xsd: moved identity constraint uniqueLNode from Substation element to SCL element in order to ensure that a LNode is unique accross all substations.
+  - SCL_IED.xsd: tExtRef: removed agDORef and added the attributes of agDORef to tExtRef as all optional without any default value.
+
+
+CF 2007/10/06:
+  - SCL_IED.xsd: tExtRef: attribute "lnInst" now of type tName (instead of tAnyName).
+
+
+CF 2007/10/17:
+  - SCL_IED.xsd: attribute "ldInst" of tLogControl made optional (without any default). If missing, it means the LD the LogControl resides in.
+  - SCL_Enums.xsd: (harmonization with Enumtypes.xml) tSIUnitEnum: added enumeration values "char", "char/s" and "kgm^2". Note: enumeration value "b/s" is not removed as it is used by tBitRateInMbPerSec.
+
+
+CF 2007/10/17:
+  - SCL_IED.xsd: attribute "ldInst" of tLogControl made optional (without any default). If missing, it means the LD the LogControl resides in.
+  - SCL_Enums.xsd: (harmonization with Enumtypes.xml) tSIUnitEnum: added enumeration values "char", "char/s" and "kgm^2". Note: enumeration value "b/s" is not removed as it is used by tBitRateInMbPerSec.
+
+
+CF 2007/10/18:
+  - SCL_Enums.xsd: (harmonization with Enumtypes.xml) replaced all "^2" with the square sign (²). Replaced all "^3" with the cube sign (³). Replaced value "A² s" with "A²t" (without a space). Replaced "s^-1" by "1/s".
+  - Scl.xsd: added identity constraint (keyRef) "refConnectedAP2IED" to ensure that the "iedName" of a ConnectedAP does point to an IED defined in the file.
+  - SCL_DataTypeTemplates.xsd: tSDO now of type tUnNaming. Added required attribute "name" of type "tRestrName1stL" (thus, now the name of an SDO is more restricted, and not of type tName anymore).
+  - SCL_BaseSimpleTypes.xsd: added simple type "tIEDName" to restrict the name of an IED.
+  - SCL_IED.xsd: tIED: attribute name is now of type "tIEDName". Attributes ExtRef.iedName, agLDRef.iedName (and thus Association.iedName, ClientLN.iedName), tControlWithIEDName.IEDName (and thus GSEControl/IEDName, and SampledValueControl/IEDName) are now of type "tIEDName".
+  - SCL_Communication.xsd: attribute ConnectedAP.iedName is now of type "tIEDName".
+  - SCL_Substation: attribute LNode.iedName is now of type "tIEDName".
+  - SCL_BaseSimpleTypes.xsd: added simple type "tLDName" to restrict the name of an LD.
+  - SCL_IED.xsd: attribute ldName of tLDevice is now of type tLDName.
+  - SCL_BaseSimpleTypes.xsd: added simple type "tLDInst" to restrict the inst of an LD.
+  - SCL_IED.xsd: attribute ldInst of tLDevice is now of type tLDInst. Attributes FCDA.ldInst, FCCB.ldInst, ExtRef.ldInst, agLNRef.ldInst (and thus Association.ldInst and ClientLN.ldInst), LogControl.ldInst are now of type tLDInst.
+  - SCL_Communication.xsd: attribute tControlBlock.ldInst (and thus GSE.ldInst and SMV.ldInst) is now of type tLDInst.
+  - SCL_BaseSimpleTypes.xsd: added simple type "tLDInstOrEmpty", which allows either an tLDInst or the empty string (is currently only used by LNode.ldInst).
+  - SCL_Substation: attribute LNode.ldInst is now of type tLDInstOrEmpty.
+  - SCL_BaseSimpleTypes.xsd: modified simple type "tPrefix" so that it can start with a letter or a digit.
+  - SCL_Substation: attribute LNode.prefix is now of type tPrefix (instead of tAnyName).
+  - SCL_BaseSimpleTypes.xsd: added simple type "tLNInst", which restricts the contents of an LN inst (cannot be the empty string).
+  - SCL_IED.xsd: attribute inst of tLN is now of type tLNInst (instead of xs:unsignedInt). Attributes FCDA.lnInst, FCCB.lnInst, ExtRef.lnInst, and LogControl.lnInst are now of type tLNInst.
+  - SCL_BaseSimpleTypes.xsd: added simple type "tLNInstOrEmpty", to be used in cases when refering to an LN inst and where the empty string is an acceptable value.
+  - SCL_IED.xsd: attributes agLNRef.lnInst (and thus Association.lnInst and ClientLN.lnInst) is now of type tLNInstOrEmpty.
+  - SCL_Substation: attribute LNode.lnInst is now of type tLNInstOrEmpty.
+  - SCL_BaseSimpleTypes.xsd: added simple type "tDataName" to restrict the name of a DATA.
+  - SCL_DataTypeTemplates.xsd: attribute name of tDO is now of type tDataName.
+  - SCL_IED.xsd: attribute name of tDOI is now of type tDataName.
+  - SCL_BaseSimpleTypes.xsd: added simple type "tDataSetName" to restrict the name of a data set.
+  - SCL_IED.xsd: tDataSet is now of type tUnNaming. Added attribute "name" (required) of type tDataSetName.
+Attribute tControl.datSet is now of type tDataSetName.
+  - SCL_BaseSimpleTypes.xsd: added simple type "tCBName" to restrict the name of a control block.
+  - SCL_IED.xsd: attribute name of tControl is now of type tCBName. Attribute FCCB.cbName is now of type tCBName.
+  - SCL_Communication.xsd: attribute cbName of tControlBlock (and thus GSE.cbName and SMV.cbName) is now of type tCBName.
+  - SCL_BaseSimpleTypes.xsd: added simple type "tLogName" to restrict the name of a log.
+  - SCL_IED.xsd: attribute name of tLog is now of type tLogName. Attribute LogControl.logName is now of type tLogName.
+  - SCL_IED.xsd: removed identity constraint (keyref) ref2LDeviceInIED.
+
+
+CF 2007/10/24:
+  - SCL_Enums.xsd: added tRightEnum.
+  - SCL_IED.xsd: tIED: added optional attributes "owner" (a normalizedString, no default) and "engRight" (tRightEnum, default "full").
+  - SCL_BaseSimpleTypes.xsd: added simple type "tAccessPointName" describing the allowed name of an AccessPoint.
+  - SCL_IED.xsd: tAccessPoint now of type tUnNaming (instead of tAcsiNaming). Added required attribute "name", of type tAccessPointName. ServerAt.apName now of type tAccessPointName (instead of tAcsiName).
+  - SCL_Communication.xsd: tConnectedAP: attribute apName is now of type tAccessPointName (instead of tAcsiName).
+
+
+CF 2007/11/19:
+  - SCL_IED.xsd: tServices: added optional (0..1) sub-element SVM (of type tServiceWithMax) after sub-element GSSE.
+  - SCL_IED.xsd: tAccessPoint: added optional (0..1) sub-element Services (of type tServices) before the GOOSESecurity sub-element.
+  - SCL.xsd: element SCL: removed unique identity constraint "uniqueLNode" (NB: because iedName can be "None" if not yet assigned). Instead, added the following unique identity constraints to check for uniqueness of a LNode (only direct children):
+     + uniqueChildNameInSubstation for LNodes in a Substation
+     + uniqueLNodeInVoltageLevel for LNodes in a VoltageLevel
+     + uniqueLNodeInFunctionSS for LNodes in a Function of a Substation
+     + uniqueLNodeInBay for LNodes in a Bay
+     + uniqueLNodeInFunctionVL for LNodes in a Function of a VoltageLevel
+     + uniqueLNodeInFunctionB for LNodes in a Function of a Bay
+     + uniqueLNodeInSubFunction for LNodes in a SubFunction
+     + uniqueLNodeInPowerTransformer for LNodes in a PowerTransformer
+     + uniqueLNodeInGeneralEquipment for LNodes in a GeneralEquipment
+     + uniqueLNodeInSubEquipment for LNodes in a SubEquipment
+     + uniqueLNodeInTransformerWinding for LNodes in a TransformerWinding
+     + uniqueLNodeInTapChanger for LNodes in a TapChanger
+     + uniqueLNodeInConductingEquipment for LNodes in a ConductingEquipment
+     + uniqueLNodeInConnectivityNode for LNodes in a ConnectivityNode
+     + uniqueLNodeInConductingEquipmentOfFunction for LNodes in a ConductingEquipment of a Function
+     + uniqueLNodeInGeneralEquipmentOfFunction for LNodes in a GeneralEquipment of a Function
+     + uniqueLNodeInGeneralEquipmentOfSubFunction for LNodes in a GeneralEquipment of a SubFunction
+     + uniqueLNodeInConductingEquipmentOfSubFunction for LNodes in a ConductingEquipment of a SubFunction
+
+
+CF 2007/11/23:
+  - SCL_IED.xsd: tServices: renamed sub-element SVM to SMV.
+
+
+CF 2008/01/07:
+  - SCL_BseTypes.xsd: tDurationInMilliSec and tBitRateInMbPerSec: attribute unit made optional (thus, as a consequence, they do not restrict tValueWithUnit anymore).
+  - SCL_BaseTypes.xsd: attribute unit of tBitRateInMbPerSec now of type normalizedString
+  - SCL_Enums.xsd: removed enum value "b/s" of tSIUnitEnum as it does not exist in 7-3 and is not needed anymore for tBitRateInMbPerSec.
+
+
+CF 2008/01/18:
+  - SCL_IED.xsd: tSettingControl: added the restriction to attributes "numOfSGs" and "actSG" that they must be greater than 0 (source: Part 7-2).
+
+
+CF 2008/08/21:
+  - SCL_Communication.xsd: modified the patterns of tP_IP, tP_IP-SUBNET, and tP_IP-GATEWAY.
+
+
+CF 2008/09/04:
+  - SCL_Enums.xsd: "tSIUnitEnum": renamed enum value "cos_phi" to "cos(phi)" (harmonization).
+  - SCL_Enums.xsd: "tFCEnum": added value "SR" (for service response)
+  - SCL_Enums.xsd: "tSIUnitEnum": added value "dB"
+  - Enumtypes.xml: added enum value "dB" to "SIUnit" with ord 79
+  - SCL_Enums.xsd: "tPredefinedBasicTypeEnum": added value "INT64"
+  - SCL_IED.xsd: "tLN0": removed child SCLControl
+  - SCL_IED.xsd: removed type "tSCLControl"
+  - SCL_Enums.xsd: "tPredefinedCDCEnum" added enum values "ENS", "ENC", and "ENG"
+  - SCL_IED.xsd: "tDataSet": removed child "FCCB".
+  - SCL_IED.xsd: removed type "tFCCB"
+  - SCL_IED.xsd: "tServiceForConfDataSet": removed attribute "fccb"
+  - SCL_IED.xsd: "tClientServices": removed attribute "fccb"
+  - SCL_IED.xsd: "IED": removed identity constraints "ref2LDeviceInDataSetForFCCBinLN" and "ref2LDeviceInDataSetForFCCBinLN0"
+  - SCL_IED.xsd: "tLogControl": added optional attribute "bufTime", an unsigned int with default value 0.
+
+
+CF 2008/09/06:
+  - Enumtypes.xml: changed Header id to "Normative Enumerations 2007" (instead of "Normative Enumerations 2006")
+  - Enumtypes.xml: enumType "setCharact": renamed value with ord=1 from "" to "ANSI Extremly Inverse"
+  - SCL_Enums.xsd: "tPredefinedCDCEnum" added enum values "CTS", "UTS", "BTS", "LTS", "GTS", "MTS", "NTS", "STS" (new CDC classes for new LN "LTRK")
+  - Enumtypes.xml: added enum value "Unsucessful" to "AutoRecSt" with ord 4
+  - SCL_Enums.xsd: "tPredefinedCommonConductingEquipmentEnum": added values "FAN", "SCR", "SMC"
+  - SCL_Enums.xsd: "tPredefinedGeneralEquipmentEnum": added values "FAN", "FIL", "PMP", "VLV"
+  - SCL_Enums.xsd: removed "tServiceFCEnum"
+  - SCL_DataTypeTemplates: "tDAType": added (at the end) optional child element "ProtNs". "ProtNs" has an optional and unbounded "type" attribute (default value "8-MMS") indicating the specific protocol mapping. It has a xs:normalizedString value that specifies the standard (version) of / for this protocol (i.e. IEC 61850-8-1:2003)
+  - SCL_IED.xsd: "tClientLN": added optional attribute (without default value) "apRef", of type tAccessPointName
+  - SCL_IED.xsd: "tControlWithIEDName": children IEDName have a new optional optional attribute (without default value) "apRef", of type tAccessPointName
+  - SCL_IED.xsd: "tGSEControl": added optional attribute "fixedOffs" (default value false)
+  - SCL_IED.xsd: "tReportSettings": added optional attribute "resvTmms" (default value false)
+  - SCL_BaseSimpleTypes.xsd: "tDataSetName" changed max length from 32 to 52
+  - SCL_Enums.xsd: "tPredefinedBasicTypeEnum": added new enum value "Currency"
+  - SCL_IED.xsd: "tTrgOps": removed optional attribute "includeAll"
+  - SCL_Enums.xsd: added new type "tSDOCount" (for the count attribute of "SDO"): only unsignedInt or tRestrName1stL (=SDO name) values are allowed
+  - SCL_DataTypeTemplates: "tSDO": added optional attribute "count", of type tSDOCount, without default value
+  - SCL_Enums.xsd: added type "tSmpMod", with allowed values "SmpPerPeriod", "SmpPerSec", and "SecPerSmp". Shall be used by attribute "smpMod" of "tSampledValueControl"
+  - SCL_IED.xsd: "tSampledValueControl": added optional attribute "smpMod" of type "tSmpMod", with default value "SmpPerPeriod"
+  - SCL_IED.xsd: "tSMVSettings": added optional attribute "samplesPerSec", a boolean with default value false
+  - SCL_IED.xsd: "tSMVSettings": added child elements "SamplesPerSec" (0..n, decimal >=0) and "SecPerSamples" (0..n, decimal >=0) in sequence with "SmpRate"
+
+
+CF 2008/09/08:
+  - Enumtypes.xml: removed "Dbpos"
+  - Enumtypes.xml: removed "Tcmd"
+  - SCL_IED.xsd: "tSMVSettings": changed sequence of children into a 1..n choice of "SmpRate", "SamplesPerSec", and "SecPerSamples"
+  - SCL_IED.xsd: "tSMVSettings": "SmpRate", "SamplesPerSec", and "SecPerSamples" are now decimals strictly greater than 0 (before they could be 0)
+  - SCL_DataTypeTemplates: "tSDO": optional attribute "count", of type tSDOCount, has now default value 0 (before: without default value)
+
+
+CF 2008/09/09:
+  - SCL_IED.xsd: "tSMVSettings": child elements "SmpRate", "SamplesPerSec", and "SecPerSamples" are now unsigned integers (and not decimals) >0
+  - SCL_Enums.xsd: "tPredefinedBasicTypeEnum": added "PhyComAddr" (for GoCB/GsCB)
+  - SCL_IED.xsd: "tControlWithIEDName": children IEDName have a new optional optional attributes (withtout default values) "ldInst" (of type tLDInst), "prefix" (of type tPrefix), "lnClass" (of type tLNClassEnum), "lnInst" (of type tLNInst)
+  - SCL_IED.xsd: "tServices": added optional unsigned int (excluding 0) attribute "nameLength", with default value 32
+  - SCL_IED.xsd: "tExtRef": added optional attributes (withtout default value) "serviceType" (only allowed values are "Poll", "Report", "GOOSE", and "SMV"), "srcLDInst" (type="tLDInst"), "srcPrefix" (type="tPrefix"), "srcLNClass" (type="tLNClassEnum"), "srcLNInst" (type="tLNInst"), "srcCBName" (type="tCBName")
+
+
+CF 2008/09/11:
+  - SCL_Enums.xsd: "tPredefinedBasicTypeEnum": added "TrgOps", "OptFlds", and "SvOptFlds"
+  - All (*.xsd): cleanup: removed commented parts
+
+
+CF 2008/09/12:
+  - SCL_IED.xsd: "tLDevice": removed unique identity constraint "uniqueLogName"
+  - SCL_IED.xsd: "LN": renamed unique identity constraint "providedLogName" to "uniqueLogInLN"
+  - SCL_IED.xsd: "LN0": added unique identity constraint "uniqueLogInLN0"
+
+
+CF 2008/10/04:
+  - SCL_IED.xsd: "tReportSettings": renamed optional attribute "resvTmms" to "resvTms"
+  - SCL_IED.xsd: unique identity constraint "uniqueSDI_DAIinDOI": added field "ix"
+  - SCL_Enums.xsd: added new type "tDACount" (for the count attribute of "DA" or "BDA"): only unsignedInt or tRestrName1stL (=DA name) values are allowed
+  - SCL_DataTypeTemplates: "tAbstractDataAttribute": optional attribute "count" is now of type "tDACount" (instead of just xs:unsignedInt)
+
+
+CF 2008/10/29:
+  - SCL_Enums.xsd: added new types "tPredefinedPTypePhysConnEnum" and "tPTypePhysConnEnum" to describe the value of the type attribute of the P of a PhysConn. There are 4 predefined values ("Type", "Plug", "Cable" and "Port"). Further are allowed any strings starting with an upper-case letter and containing only letters, digits and the dash ("-").
+  - SCL_Communication.xsd: new type "tP_PhysConn", similar to the tP but whose "type" attribute is now of type "tPTypePhysConnEnum" instead of "tPTypeEnum".
+  - SCL_Communication.xsd: tPhysConn: child elements "P" are now of type "tP_PhysConn" (instead of tP).
+  - SCL_Enums.xsd: definition of an enum type "tPhysConnTypeEnum" for the "type" of a PhysConn. That enum is the union of the new types "tPredefinedPhysConnTypeEnum" (only two values: "Connection" and "RedConn") and "tExtensionPhysConnTypeEnum" (shall start with an uppper-case letter and contains only letters, digits and the dash)
+  - SCL_Communication.xsd: attribute "type" of tPhysConn is now of type "tPhysConnTypeEnum" (instead of a normalized string).
+
+
+CF 2008/11/27:
+  - SCL_Communication.xsd: added unique identity constraint uniquePTypeInPhysConn (there cannot be two P elements with same type within a PhysConn).
+
+
+CF 2009/01/26:
+  - SCL_Communication.xsd: tPhysConn now extends tUnNaming, i.e., a "desc" attribute, a "Text" sub-element and "Private" sub-elements can be added to a "PhysConn".
+
+
+CF 2009/02/23:
+  - SCL_IED.xsd: added field "ix" to unique identity constraint "uniqueSDI_DAIinSDI" (as it is already for "uniqueSDI_DAIinDOI").
+
+
+CF 2009/02/24:
+  - SCL_BaseSimpleTypes.xsd: removed unused type "tRestrLdName".
+  - SCL_Enums.xsd: removed unsued types "tTrgOptEnum" and "tTrgOptControlEnum".
+  - SCL_Enums.xsd: added type "tServiceType". Shall be used as type for attribute "serviceType" of "tExtRef".
+  - SCL_IED.xsd: attribute "serviceType" of "tExtRef" is now of type "tServiceType".
+  - SCL_Enums.xsd: "tExtensionCDCEnum": added max length (inclusive) of 5 characters.
+  - SCL_BaseSimpleTypes.xsd: max length of "tPrefix" is now 11 (instead of 6) - new rule decided during IEC meeting in Grenoble: length of Prefix + LnInst can be up to 12 characters.
+  - SCL_BaseSimpleTypes.xsd: max length of "tLNInstOrEmpty" is now 12 (instead of 7) - new rule decided during IEC meeting in Grenoble (Feb. 2009): length of Prefix + LnInst can be up to 12 characters. Due to type inheritance, also affects "tLNInst".
+  - SCL_Enums.xsd: "tFCEnum": added enumeration values "BL" (blocking) and "OR" (Operate Received).
+  - SCL_IED.xsd: "tServices": added [0..1] sub-element "SupSubscription" of type "tServiceWithMax". This new Service capability describes the capability to create supervision LNs for GOOSE or SV subscriptions via SCL by system tool. If missing, none can be created, only possibly preconfigured ones can be used. Mandatory attribute "max" is the maximum number of subscription supervision LNs to be instantiated via SCL by a system tool.
+  - SCL_IED.xsd: "tServices": added [0..1] sub-element "ConfSigRef" of type "tServiceWithMax". This new service capability describes the capability to configure references to incoming signals; if missing, none can be created, possibly preconfigured ones can be used. Mandatory attribute "max" is the maximum number of reference objects (e.g. InRef1, BlkRef1) to be instantiated via SCL by a system tool.ngth of Prefix + LnInst can be up to 12 characters. Due to type inheritance, also affects "tLNInst".
+  - SCL_Enums.xsd: "tPredefinedCDCEnum": added the following new CDC classes:  BAC, ORG, TSG, CUG, CSG, VSS and VSG.
+
+
+CF 2009/02/26:
+  - SCL_BaseSimpleTypes.xsd: "tDataName": max length set to 12 (instead of 10)
+  - SCL_Enums.xsd: "tExtensionLNClassEnum": set length to 4 (before there was only a minimal length of 1).
+  - SCL_BaseSimpleTypes.xsd: "tLDName" now cannot start with a digit (0..9) anymore.
+  - SCL_Enums.xsd: only predefined CDC classes are allowed in Edition 2. Removed "tExtensionCDCEnum". "tCDCEnum" now includes only "tPredefinedCDCEnum".
+
+
+CF 2009/03/15:
+  - SCL_BaseSimpleTypes.xsd: Removed unsued type "tRestrName".
+  - SCL_BaseTypes.xsd: Removed unused type "tAcsiNaming".
+  - SCL_IED.xsd: Removed unused attribute group "agDORef".
+  - SCL_Enums.xsd: Removed unused types "tPredefinedEquipmentEnum" and "tEquipmentEnum".
+  - SCL_BaseSimpleTypes.xsd: XML strings allow any Unicode characters. Updated types to allow only their restricted pattern with ISO 646 characters. Affected types: "tAcsiName", "tRestrName1stU", "tRestrName1stL", "tSclVersion", "tSclRevision", "tLDName", "tLDInst", "tPrefix", and "tLNInstOrEmpty".
+  - SCL_Communication.xsd: Corrected "tP_OSI-AP-Title" (should not be quoted as specified in Part 8-1, Table 99).
+  - SCL_Communication.xsd: "tP_MAC-Address", "tP_VLAN-ID" and "tP_APPID" had a min and max length of same value. Replaced with a single length facet.
+  - SCL_Communication.xsd: XML strings allow any Unicode characters. Updated types to allow only their restricted pattern with ISO 646 characters. Affected types: "tP_IP", "tP_IP-SUBNET", "tP_IP-GATEWAY", "tP_OSI-NSAP", "tP_OSI-TSEL", "tP_OSI-SSEL", "tP_OSI-PSEL", "tP_OSI-AP-Title", "tP_OSI-AP-Invoke", "tP_OSI-AE-Qualifier", "tP_OSI-AE-Invoke", "tP_MAC-Address", "tP_APPID", and "tP_VLAN-ID".
+  - SCL_Enums.xsd: XML strings allow any Unicode characters. Updated types to allow only their restricted pattern with ISO 646 characters. Affected types: "tExtensionPTypeEnum", "tExtensionPhysConnTypeEnum", "tExtensionEquipmentEnum", "tExtensionGeneralEquipmentEnum", and "tExtensionLNClassEnum".
+  - SCL_IED.xsd: XML strings allow any Unicode characters. Updated to allow only their restricted pattern with ISO 646 characters. Affected attribute: "tCertificate.serialNumber".
+  - SCL_BaseSimpleTypes.xsd: Added simple type "tRptID": shall contain only characters from Basic Latin (ISO 646). Cannot be the empty string.
+  - SCL_IED.xsd: attribute "rptID" of "tReportControl" is now of type "tRptID" (instead of "tName").
+  - SCL_Enums.xsd: enum "": added values "SNTP-Port" and "MMS-Port".
+  - SCL_Communication.xsd: added abstract type "tP_Port" (sub-type of "tP") that shall model a TCP/UDP port (shall be a 16 bit integer => 1-5 digits). Created two sub-types: "tP_SNTP-Port" (with fixed type="SNTP-Port") and "tP_MMS-Port" (with fixed type="MMS-Port").
+
+
+CF 2009/03/16:
+  - SCL_BaseSimpleTypes.xsd: updated "tLDName": can now also start with a digit (0..9).
+  - SCL_BaseSimpleTypes.xsd: XML strings allow any Unicode characters. Updated type to allow only their restricted pattern with ISO 646 characters. Affected type: "tAccessPointName".
+  - SCL_BaseSimpleTypes.xsd: Added "tAssociationID", that shall be a non-empty string containing only digits and letters (upper and lower-case) from ISO 646.
+  - SCL_IED.xsd: Attribute "associationID" of "tAssociation" is now of type "tAssociationID" (instead of tName).
+
+
+CF 2009/03/19:
+  - SCL_BaseSimpleTypes.xsd: added "tFullAttributeNameEnum", which models the full name of a (possibly structured, i.e., with dots) data attribute, e.g., "mag.f". Note: this modeling does not fully restrict the parts of the data attribute name as it is not possible to take into account enums for patterns (in this case tAttributeNameEnum - a single data attribute name should start with a lower case letter except for the predefined values as enumerated in "tPredefinedAttributeNameEnum"); thus, invalid parts (i.e., starting with an upper-case letter but not part of "tPredefinedAttributeNameEnum") are possible. Nonetheless, the errors shall be discovered latest when trying to match to the real data attribute.
+  - SCL_IED.xsd: attribute "daName" of "tFCDA" is now of type "tFullAttributeNameEnum" (instead of "tName").
+  - SCL_IED.xsd: attribute "daName" of "tExtRef" is now of type "tFullAttributeNameEnum" (instead of "tName").
+  - SCL_BaseSimpleTypes.xsd: added "tFullDOName", which models the full name of a (possibly structured, i.e., with dots) data attribute, e.g., "PhV.phsA".
+  - SCL_IED.xsd: attribute "doName" of "tFCDA" is now of type "tFullDOName" (instead of "tName").
+  - SCL_IED.xsd: attribute "doName" of "tExtRef" is now of type "tFullDOName" (instead of "tName").
+  - SCL_Communication.xsd: "tP_MAC-Address", "tP_VLAN-ID" and "tP_APPID": removed length facet and changed accordingly pattern (as MSXML has problems with an length facet overriding an minLength facet from a super-type). Corrected solution is fully equivalent with the previous one.
+
+
+CF 2009/03/27:
+  - SCL_IED.xsd: attribute "appID" of "tGSEControl" to Basic Latin (ISO 646) characters and to a max length of 128.
+  - SCL_IED.xsd: attribute "smvID" of "tSampledValueControl" to Basic Latin (ISO 646) characters and to a max length of 128.
+
+
+CF 2009/04/20:
+  - SCL_BaseSimpleTypes.xsd: "tLDName": must start with an alpha character (upper or lowercase). (Before it could start with a digit as well).
+  - SCL_BaseSimpleTypes.xsd: "tPrefix": must start with an alpha character (upper or lowercase). (Before it could start with a digit as well).
+
+
+CF 2009/05/08:
+  - SCL_BaseSimpleTypes.xsd: "tFullAttributeName": modified type to allow indexes (further, it is now a restriction of xs:normalizedString instead of xs:Name as it may contain parentheses). Indexes (in the form "(i)") are allowed at any level of the full attribute name.
+  - SCL_BaseSimpleTypes.xsd: "tFullDOName": modified type to allow indexes (further, it is now a restriction of xs:normalizedString instead of xs:Name as it may contain parentheses), however only at the second level.
+  - SCL_IED.xsd: tLog now inherits from "tUnNaming" (instead of "tAnyContentFromOtherNamespace"). Thus, now it may have a Text sub-element, Private sub-elements, as well as a "desc" attribute.
+
+
+CF 2009/06/09:
+  - SCL_IED.xsd: "tServices": renamed child element "SMV" to "SMVsc".
+
+
+CF 2009/07/03:
+  - SCL_DataTypeTemplates.xsd: attribute "ord" of tEnumVal now of type xs:int instead of xs:integer (=> now a 32 bit integer).
+  - SCL_IED.xsd: removed default value for attribute "valKind" in tDAI (previously, "Set").
+
+
+===============================================================
+EOF
+===============================================================

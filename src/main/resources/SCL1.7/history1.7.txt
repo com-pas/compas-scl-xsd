@@ -1,0 +1,99 @@
+===============================================================
+REVISION HISTORY FOR THE SCL XSD FILES, AFTER RELEASE 1.0
+FROM June 1, 2004.
+===============================================================
+
+CF 2004/06/04:
+  - in SCL_*.xsd: updated the annotation and the version of
+    the XSD files.
+  - (T5) in SCL_Enums.xsd: added "Oper", "SBO", "SBOw", and "Cancel"
+    to the allowed values for "tPredefinedAttributeNameEnum" (Tissue #5).
+
+CF 2004/06/14:
+  - in SCL_*.xsd: only changed files have a new version, including
+    SCL.xsd.
+  - (T9) in SCL_IED.xsd: attribute "datSet" of "tControl" made optional. Rationale:
+    if provided, the identity constraints will ensure that it exists (in the
+    same LN). If not provided, it means that there is no data set. Remark: do
+    not use the empty string to indicate that there is no data set associated
+    with the control block.
+
+CF 2005/02/14:
+  - (T17) in SCL_IED.xsd: type of attribute Name of tSDI set to tAttributeNameEnum
+  - (T17) in SCL_IED.xsd: type of attribute Name of tDAI set to tAttributeNameEnum
+    (should be the same as for attribute Name of DA in the data
+    type templates section)
+
+CF 2005/07/27:
+  - (T1, T2) in SCL_Communication.xsd: corrected Tissue Entry #1 (Syntax)
+    for the pattern definition of tP_IP, tP_IP-SUBNET, tP_IP-GATEWAY.
+    Changed from "[0-2]?\d{1,2}\.[0-2]?\d{1,2}\.[0-2]?\d{1,2}.[0-2]?\d{1,2}"
+    to           "[0-2]?\d{1,2}\.[0-2]?\d{1,2}\.[0-2]?\d{1,2}\.[0-2]?\d{1,2}".
+  - (T3) in Enumtypes.xml: Tissue Entry #3 (Missing ENUMs) added enums AutoRecSt,
+    FltLoop, and PmpCtl. The values are those as defined in 7-4.
+  - (T6) in SCL_IED.xsd: corrected Tissue Entry #6 (ReportControl/OptFields):
+    removed attribute "segmentation" from agOptFields.
+  - in SCL_DataTypeTemplates.xsd: renamed identity constraint uniqueDAorSDOInLDOType
+    to uniqueDAorSDOInDOType.
+  - in SCL_DataTypeTemplates.xsd: renamed identity constraint uniqueBDAInLDAType
+    to uniqueBDAInDAType.
+  - (T8)in Enumtypes.xml: Tissue Entry #8 (SIUnit enumeration for W): renamed
+    EnumVal with ord 62 from W to Watts.
+  - in ExampleFDIS.xml: inverted attributes type and xsi:type for P attributes
+    so that XML Spy does not complain anymore (although this is valid).
+  - in ExampleFDIS2.xml: inverted attributes type and xsi:type for P attributes
+    so that XML Spy does not complain anymore (although this is valid).
+  - in SCL_IED.xsd: (optional) attribute datSet of tControl is now of type
+    tName, instead of tAnyName. If provided, it should not be empty.
+  - (T10) in SCL_Enums.scl: Tissue Entry #10 (Base type for bitstring usage): added
+    enumeration value "Check" to tPredefinedBasicTypeEnum.
+  - (T15) in SCL_IED.xsd: corrected Tissue Entry #15 (bufOvfl in Schema?):
+    removed attribute "bufOvfl" from agOptFields.
+  - (T16) in SCL_IED.xsd: corrected Tissue Entry #16 (modify attribute missing):
+    created new type tServiceWithMaxAndMaxAttributesAndModify, for ConfDataSet.
+  - (T24) in SCL_Communication.xsd: corrected Tissue Entry #24 (wrong schema constraint):
+    Added field "@ldInst" to the identity constraints uniqueGSEinConnectedAP and
+    uniqueSMVinConnectedAP in tSubNetwork.
+
+CF 2005/08/11:
+  - SCL_BaseSimpleTypes.xsd: removed comments (xs:annotation).
+  - (T18, T130) SCL_BaseSimpleTypes.xsd: added simple type tRestrLdName, for the name of a LD.
+    It is restricted to alfanumeric (but starting with a letter), min 1 and max 64 char.
+  - (T18, T130) SCL_IED.xsd: corrected Tissue #18, 130: LDevice element: optional attribute
+    ldName added.
+  - (T18) SCL_BaseSimpleTypes.xsd: (Tissue #18) tHeader: funcName restricted to "IEDName", and
+    made optional with default value "IEDName".
+  - (T5) in SCL_Enums.xsd: added "Check" to the allowed values for
+    "tPredefinedAttributeNameEnum" (Tissue #5).
+  - (T8) in SCL_Enums.xsd: tSIUnitEnum corrected (Tissue #8): phi instead theta, Watts introduced.
+  - (T8) in Enumtypes.xsd: SIUnit corrected (Tissue #8): phi instead theta.
+  - (T169) in Enumtypes.xsd: (Tissue #169) angid: order of Vother and Aother adapted to 7-3.
+  - (T12) in SCL_IED.xsd: Tissue #12 - GSSE, GOOSE; type changed to tServiceWithMaxAndCLient;
+    this type added.
+  - *.xsd: new version set to 1.4.
+
+WW 2005/08/15
+  - SCL_Enums.xsd: added "VisString129" to "tPredefinedBasicTypeEnum" because of 7-3 modification
+
+
+CF 2006/10/25:
+  - SCL_*: changed the annotation for the schema.
+
+WW 2006/11/15:
+  - made rptID optional (Tissue #245)
+  
+CF 2013/08/14:
+  - SCL_Communication.xsd: [Tissue #1059] Corrected "tP_OSI-AP-Title" (should not be quoted as specified in Part 8-1, Table 99).
+  - SCL*.xsd: schema version set to 1.6.
+  
+CF 2014/03/06: Release of SCL 1.7 (No change in syntax of SCL instance file)
+  - SCL_Enums.xsd: removed duplicate enumeration value "Check" in "tPredefinedAttributeNameEnum".
+  - SCL_IED.xsd: added XML documentation to tReportControl.rptId ("Even if rptID is optional, it is recommended, for backward compatibility reason, that tools that instantiate ReportControl element, set the attribute rptID to the default system value defined by 8-1: the reference to the Report Control Block.").
+  - SCL*.xsd: set schema version to 1.7 and release date to 2014/03/06.
+  
+CF 2014/03/11:
+  - SCL_IED.xsd: in "tReportControl", changed the type of attribute "rptID" from "tAnyName" to "tName", i.e., the empty string is not allowed for rptID.
+
+===============================================================
+EOF
+===============================================================
