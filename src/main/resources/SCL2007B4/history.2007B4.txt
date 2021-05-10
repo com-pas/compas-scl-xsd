@@ -1,0 +1,160 @@
+===============================================================
+REVISION HISTORY FOR THE SCL REVISION "2007B4" (Ed. 2.1)
+FROM January 22, 2014.
+BASED on SCL 2007B (released 2014-01-22).
+===============================================================
+  
+CF 2014/06/11:
+  - SCL_Communication.xsd: [TISSUE 1175] modified tP_IPbase to allow only lower-case letters for IPv6 addresses.
+  - SCL.xsd: commented out attribute schemaDate for element SCL.
+    
+CF 2014/06/27:
+  - Implementation of recommendations on SCL versioning Telco of 2014/04/03
+     - SCL_BaseSimpleTypes.xsd: added type tSclRelease, an unsigned byte larger than 0.
+     - SCL.xsd: added attribute release to SCL element: optional, of type tSclRelease, with fixed value 1.
+     - SCL_IED.xsd: added attribute originalSclRelease to tIED: optional, of type tSclRelease (no default/fixed value).
+     - SCL*.xsd: updated documentation to: "SCL schema version "2007" revision "B" release 1,  for IEC 61850-6 Ed. 2.1. Draft 2014-06-27.".
+  - SCL_Communication: [TISSUE 1208] changed tP_IP-SUBNET to allow IPv4 addresses or the "/n" notation, where n=1..127.
+  - SCL.xsd: updated schema version to "2007B1" (includes the release).
+  
+CF 2014/07/18:
+  - Implementation of new resolution of TISSUE 1208.
+     - SCL_Enums.xsd: added enumeration values "IPv6", "IPv6-GATEWAY", and "IPv6-SUBNET" to "tPredefinedPTypeEnum"
+     - SCL_Communication.xsd: modified the regular expressions of tP_IPbase, tP_IP, tP_IP-SUBNET, tP_IP-GATEWAY to follow only the IPv4 address scheme. Added new types tP_IPv6base, tP_IPv6, tP_IPv6-SUBNET, tP_IPv6-GATEWAY for the IPv6 addressing scheme.
+  - SCL*.xsd: modified copyright year to 2014.
+  - SCL.xsd: updated list of implemented tissues and Ed. 2 tissues not relevant for the SCL schema.
+  - SCL*.xsd: updated draft date.
+  
+CF 2015/04/02:
+  - SCL*.xsd: preparation as new SCL schema revision for Ed. 2.1: release is 2, SCL schema version is 2007B2, copyright year is 2015.
+  - Final removal of commented out parts from "2007B1":
+	  + SCL_Enums.xsd: removal of commented out "tSIUnitEnum" (will not be needed).
+	  + SCL_Communication.xsd: removal of commented out old regex (pattern) for "tP_Port".
+	  + SCL_Substation.xsd: removal of commented out uniqueness identity constraint "uniqueSubEquipmentLTC" in "tTransformerWinding" (below element "TapChanger").
+	  + SCL_Substation.xsd: removal of commented out uniqueness identity constraint "uniqueSubEquipment" in "tBay" (below element "ConductingEquipment").
+	  + SCL_Substation.xsd: removal of commented out uniqueness identity constraint "uniqueSubEquipmentFunc" in "tFunction" (below element "ConductingEquipment")
+  - SCL.xsd: attribute "release" of element SCL has now fixed value of 2 instead of 1. It is still fixed. Note: an instance file does thus not need to set this attribute.
+
+CF 2015/04/02:
+  - TISSUE 1328:
+      + SCL_BaseSimpleTypes.xsd: added "tID", an xs:token, additionally allowing no spaces, of length 1..255.
+      + SCL_BaseTypes.xsd: modified "tIDNaming": its attribute "id" is now of type "tID" (instead of "tName").
+  - TISSUE 1050: inclusion of 8-1 fields of PhyComAddr as valid data attribute names.
+      + SCL_Enums.xsd: "Addr", "PRIORITY", "VID" and "APPID" to "tPredefinedAttributeNameEnum".
+
+CF 2015/05/12:
+  - SCL_BaseTypes.xsd: [TISSUE 1328] modified "tIDNaming": its attribute "id" is now of type "tID" (instead of "tName"). Was forgotten in previous update.
+
+CF 2015/05/21:
+  - SCL.xsd: SCL.release now mandatory with fixed value 2 (instead of optional fixed value 2)
+
+CF 2015/06/15:
+  - Integration of 90-5 into Ed. 2.1: addition of layer 3 capabilities (R-GOOSE, R-SV).
+     + SCL_IED.xsd: tGOOSEcapabilities:
+	    - add optional Boolean attributes goose with default true indicating weather layer 2 GOOSE is supported or not as publisher.
+		- add optional Boolean attributes rGOOSE with default false indicating weather layer 3 GOOSE (i.e., R-GOOSE) is supported or not as publisher.
+		- Note: existing attribute max corresponds to the maximal number of GoCBs, regardless if layer 2 or 3.
+     + SCL_IED.xsd: tSMVsc
+	    - add optional Boolean attributes sv with default true indicating weather layer 2 SV is supported or not as publisher.
+		- add optional Boolean attributes rSV with default false indicating weather layer 3 SV (i.e., R-SV) is supported or not as publisher.
+		- Note: existing attribute max corresponds to the maximal number of SVCBs, regardless if layer 2 or 3.
+		- Note: R-SV is always multicast, thus an USVCB shall not be configured for R-SV. This cannot be enforced by the SCL schema.
+     + SCL_IED.xsd: tClientServices: add optional Boolean attributes rGOOSE and rSV with default value false, indicating weather R-GOOSE and R-SV are supported as subscriber. Note: maxGOOSE and maxSMV (of tClientServices) indicate the maximal number of GOOSE and R-GOOSE, respectively SV and R-SV that the device can receive.
+  - [Related to TISSUE 1050] inclusion of 90-5 fields of PhyComAddr as valid data attribute names.
+      + SCL_Enums.xsd: "TransportInUse", "IPClassOfTraffic", "IPv6FlowLabel", "IPAddressLength", and "IPAddress" to "tPredefinedAttributeNameEnum".
+  - Impact of 9-3 integration into 9-2:
+     + SCL_IED.xsd:
+        - "agSmvOpts" (i.e., for "SmvOpts"): add Boolean flag "synchSourceId", default false, indicating whether the 8-bytes grand master 9-3 identity shall be included in the SV frame.
+        - A corresponding capability: add to "tSMVSettings" a new Boolean attribute "synchSrcId" with default value false (indicating whether the IED can include the 8-bytes grand master ID in its SV messages).
+  - Impact of 90-5 integration into 9-2:
+     + SCL_IED.xsd: remove attributes "timestamp" from "agSmvOpts" (affects "SmvOpts") and "pdcTimeStamp" from "tSMVSettings" as they are no longer needed. RefreshTime (already in) shall be used and is enough.
+  - TISSUE 1359:
+     + SCL_IED.xsd: in tTimeSyncProt, add new attribute "iec61850_9_3", Boolean, default false, which shall be used instead of "c37_238" (now deprecated, but still in SCL).
+  - TISSUE 1365: ("None" shall not be allowed as IED name, except for the LNode.iedName to indicate that the LNode is not allocated.)
+     + SCL_BaseSimpleTypes.xsd: redefined "tIEDName" to not allow "None" as value. Added types "tIEDNameIsNone" and "tIEDNameOrNone" (which is the union type of "tIEDName" and "tIEDNameIsNone").
+	 " SCL_Substation.xsd: "tLNode": attribute "iedName" now of type "tIEDNameOrNone" instead of "tIEDName" (default value "None" as before).
+
+CF 2015/07/07:
+  - SCL_IED.xsd: [TISSUE 1397] added optional Boolean attribute "noIctBinding" with default value false to tClientServices; if true, it indicates that the IED tool can only bind incoming signals for ExtRefs that were provided in the ICD/IID file.
+
+CF 2015/10/14:
+  - SCL_IED.xsd: [WG10 Brussels decision] revert on removal of 2 attributes for the 90-5 integration into 9-2 done on 2015/06/15; added attributes "timestamp" to "agSmvOpts" (affects "SmvOpts") and "pdcTimeStamp" to "tSMVSettings"; the usage of the two attributes is now deprecated.
+  - SCL_IED.xsd: [TISSUE 1434] Addition of optional attribute "nofASDU" (of type tServiceSettingsNoDynEnum, default value "Fix") to "tSMVSettings".
+
+CF 2015/10/26:
+  - TISSUE 948: restriction of the EnumType string value to 127 characters (can be empty) limited to the Basic-Latin and Latin-1-Supplement character sets.
+     + SCL_Enums.xsd: added simple type "tEnumStringValue".
+	 + SCL_DataTypeTemplates.xsd: "tEnumVal" now extends "tEnumStringValue" instead of "xs:normalizedString".
+  - SCL_IED.xsd: attribute max of tRptEnabled is not allowed to be 0 any more (SCL core team decision, no TISSUE as it makes no sense anyhow). Backwards compatibility rule: if 0, an SCT shall transform it to 1.
+  - SCL_Communication.xsd: attribute "type" of tSubNetwork may not be the empty string (if provided).
+  - SCL_IED.xsd: [TISSUE 1448] tServiceConfReportControl: added optional attribute maxBuf, of type unsignedInt, no default. If missing, means that the max number of BRCBs is given by sibling max. May not be greater than max.
+  - SCL_IED.xsd: [TISSUE 1458] added the following optional attributes (without default value) to tExtRef: pServT, pLN, pDO, pDA. These attribute shall be used for later binding to indicate the preferred service type, LN class, DO name, and DA name. They belong to the ICT.
+
+CF 2015/12/02:
+  - SCL_IED.xsd: [related to TISSUE 1458] removed identity constraint uniqueExtRefInInputs (as not all combinations can be checked consistently; this will have to be checked by tools and documented in Part 6).
+  - SCL_IED.xsd: [TISSUE 1450] added default values: originalSclVersion (2003), originalSclRevision (A), and originalSclRelease (1).
+  
+CF 2016/02/26: (implementation of decisions from the WG10 meeting in Cathedral City)
+ - SCL*.xsd: set schema version and updated documentation.
+ - SCL_Enums.xsd: added "ORS" (new CDC "Object reference status") to tPredefinedCDCEnum.
+ - SCL_DataTypeTemplates.xsd: [TISSUE 1472]
+    + added identity constraint "uniqueDTT_ID" (unique ID among all data type templates)
+	+ added identity constraint "EnumTypeDATypeKey"
+	+ removed redundant identity constraints "uniqueLNodeType", "EnumTypeKey", and "DATypeKey". 
+  
+CF 2016/05/12: (implementation of decisions from the WG10 meeting in Cathedral City, related to referring a ConnectivityNode in a Line)
+ - SCL_Substation.xsd: modified "tTerminal" as follows:
+    + substationName, voltageLevelName, bayName are now optional instead of mandatory (these are only mandatory when referring to a ConnectivityNode in a Bay, not when referring to a ConnectivityNode in a Line)
+	+ added optional attribute lineName (of type tName); is required in case of referring a connectivity node in a Line.
+ - SCL_BaseSimpleTypes.xsd:
+	+ renamed "tRef" (used for tTerminal.connectivityNode and tConnectivityNode.pathName) to "tConnectivityNodeReference" for clarity, and updated regex (now there is only at least 1 seperator "/" in the reference).
+ - SCL_Substation.xsd:
+	+ "tTerminal": set type of attribute "connectivityNode" to "tConnectivityNodeReference" (instead of tRef)
+	+ "tConnectivityNode": set type of attribute "pathName" to "tConnectivityNodeReference" (instead of tRef)
+ - Note: the path name of a ConnectivityNode is as follows:
+	[ processName + "/"]* + one of
+		[ lineName + "/" ]
+		[ substationName + "/" + "voltageLevelName" + "/" + "bayName" + "/" ]
+   The reference to a ConnectivityNode is then: pathName + "/" + cNodeName.
+  
+WW 2016/11/14: (based on 61850-8-1 CDV Edition 2.1)
+ - SCL_Enums.xsd: added base types Octet6 and Octet16 as demanded from 8-1 Ed2.1 for PhysComAddr structure
+       + added new P type parameters from 8-1 Ed2.1 e.g. for R-GOOSE, R-SV, IPv6
+
+WW 2017/01/19: 
+ - SCL_Substation.xsd:
+	+ added Voltage element and attributes nomFreq and numPhases to the Line element.
+ - SCL_BaseSimpleTypes.xsd:
+	+ restricted access point name length (tAcessPointName) to 32 characters.
+ - SCL_Communication.xsd: added xsi:type patterns for P parameters: IPv6-IGMPv3Src, IP-IGMPv3Src, IP-ClassOfTraffic based on 8-1 Ed2.1.
+
+WW 2017/03/01: (based on 61850-8-1 CDV Edition 2.1, CDV comment resolution and security discussion)
+ - SCL_Enums.xsd: 
+	+ added base type LogOptFlds to tPredefinedBasicTypeEnum
+ - SCL_IED.xsd: 
+	+ added element McSecurity and attribute kdaParticipant to service capabilities GSESettings and SMVSettings (for server AP)  
+	+ added element McSecurity to ClientServices (for client AP)
+  
+CB 2017/07/05: (Implement UML task force decisions)
+ - SCL*.xsd: set schema version and updated documentation.
+ - SCL_Enums.xsd: added "TCS" (new CDC "Calculated time values") to tPredefinedCDCEnum.
+
+------------------------------
+- TISSUES INCLUSION OVERVIEW -
+------------------------------
+Open: n/a.
+
+Implemented Ed. 2 Tissues: 658, 668, 687, 768, 779, 789, 804, 806, 807, 822, 824, 845, 853, 855, 856, 857, 886, 
+						   936, 1175, 1189, 1208, 948, 1050, 1328, 1359, 1365, 1397, 1434, 1448, 1450, 1458, 1472.
+
+Tissues not relevant for the SCL schema: 660, 663, 678, 699, 700, 705, 718, 719, 721, 731, 733, 752, 769, 787, 788, 815, 
+										 823, 825, 837, 847, 865, 873, 883, 884, 885, 901, 914, 915, 918, 930, 938, 949, 
+										 961, 1048, 1054, 1059, 1118, 1130, 1131, 1147, 1161, 1168, 1173, 1188, 1195, 1200, 
+										 1204, 1207, 1221, 1224, 1255, 1284, 1185, 1280, 1327, 1337, 1354, 1395, 1398, 1399, 
+										 1400, 1401, 1402, 1415, 1416, 1419, 1421, 1431, 1444, 1445, 1446, 1447, 1451, 1452, 1457, 1461, 1471.
+
+TISSUEs for Ed. 3: 661, 706, 927, 1170, 1241, 1257, 1560, 1562.
+
+===============================================================
+EOF
+===============================================================
