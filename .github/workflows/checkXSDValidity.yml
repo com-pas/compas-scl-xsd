@@ -2,7 +2,7 @@ name: Check XSD validity
 on:
   schedule:
     #  * is a special character in YAML so you have to quote this string
-    - cron: "0 0 1,7,14,21,28 * *"
+    - cron: "0 0 * * 0"
 
 jobs:
   Check-XSD-Validity:
