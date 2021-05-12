@@ -11,7 +11,7 @@ The XSD schemas used are distributed under their [end user license agreement](./
 If there is a new version, add the definition of the new version into the pom.xml file. Then run following command:
 
 ```
-mvn initialize
+gradle retrieveXSD
 ```
 
 If the CI fail because the validation of checksum fail, change checksum of the new XSD version. Then run same maven command.
