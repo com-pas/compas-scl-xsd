@@ -1,0 +1,60 @@
+plugins {
+  id "de.undercouch.download" version "4.1.1"
+}
+
+apply plugin: 'java'
+apply plugin: 'de.undercouch.download'
+
+group = 'org.lfenergy.compas'
+version = '0.1-SNAPSHOT'
+
+description = """"""
+
+import de.undercouch.gradle.tasks.download.Download
+import de.undercouch.gradle.tasks.download.Verify
+
+task downloadMultipleFiles(type: Download) {
+  src([
+    'https://assets.iec.ch/public/tc57/IEC_61850-6.2003.SCL.1.7.full.zip',
+    'https://assets.iec.ch/public/tc57/IEC_61850-6.2009.SCL.2007B.full.zip',
+    'https://assets.iec.ch/public/tc57/IEC_61850-6.2018.SCL.2007B4.full.zip'
+  ])
+  dest project.buildDir
+}
+
+task verify1_7ZipFile(dependsOn: downloadMultipleFiles, type: Verify) {
+  src new File(project.buildDir, 'IEC_61850-6.2003.SCL.1.7.full.zip')
+  algorithm 'MD5'
+  checksum '2f912148b013350e6d09ffce64866d9a'
+}
+
+task verify2007BZipFile(dependsOn: downloadMultipleFiles, type: Verify) {
+  src new File(project.buildDir, 'IEC_61850-6.2009.SCL.2007B.full.zip')
+  algorithm 'MD5'
+  checksum '13dc10768c4ac8d58fcf70491eec3f3d'
+}
+
+task verify2007B4ZipFile(dependsOn: downloadMultipleFiles, type: Verify) {
+  src new File(project.buildDir, 'IEC_61850-6.2018.SCL.2007B4.full.zip')
+  algorithm 'MD5'
+  checksum 'd61da94836ff974fbd781ad1bc967039'
+}
+
+task unzip1_7File(dependsOn: verify1_7ZipFile, type: Copy) {
+  from zipTree(verify1_7ZipFile.src)
+  into new File(project.rootDir, 'src/main/resources/SCL1.7')
+}
+
+task unzip2007BFile(dependsOn: verify2007BZipFile, type: Copy) {
+  from zipTree(verify2007BZipFile.src)
+  into new File(project.rootDir, 'src/main/resources/SCL2007B')
+}
+
+task unzip2007B4File(dependsOn: verify2007B4ZipFile, type: Copy) {
+  from zipTree(verify2007B4ZipFile.src)
+  into new File(project.rootDir, 'src/main/resources/SCL2007B4')
+}
+
+task retrieveXSD(dependsOn: [unzip1_7File, unzip2007BFile, unzip2007B4File]) {
+}
+
