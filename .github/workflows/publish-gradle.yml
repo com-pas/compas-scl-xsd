@@ -17,4 +17,5 @@ jobs:
       - name: Publish package
         run: gradle publish
         env:
+          GITHUB_USERNAME: "OWNER"
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
