@@ -15,7 +15,7 @@ jobs:
         uses: Flurb/verify-file-checksum-action@v1
         with:
           file: 'https://assets.iec.ch/public/tc57/IEC_61850-6.2003.SCL.1.7.full.zip'
-          checksum: '2f912148b013350e6d09ffce64862d9a'
+          checksum: '2f912148b013350e6d09ffce64866d9a'
           algorithm: 'md5'
       - name: Get the output
         run: echo "${{ steps.verify.outputs.verify-result }}"
