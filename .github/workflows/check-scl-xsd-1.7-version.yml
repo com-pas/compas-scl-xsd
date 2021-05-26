@@ -1,8 +1,8 @@
 name: Check SCL XSD 1.7 version
 
-on: push
-#  schedule:
-#    - cron:  '0 0 * * 0' # “At 00:00 on Sunday.”
+on:
+  schedule:
+    - cron:  '0 0 * * 0' # “At 00:00 on Sunday.”
 
 jobs:
   check_newer_version_job:
