@@ -1,6 +1,7 @@
-on:
-  schedule:
-    - cron:  '0 0 * * 0' # “At 00:00 on Sunday.”
+on: push
+
+#  schedule:
+#    - cron:  '0 0 * * 0' # “At 00:00 on Sunday.”
 
 jobs:
   check_newer_version_job:
