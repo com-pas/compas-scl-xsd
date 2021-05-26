@@ -1,21 +1,20 @@
-name: Check newer XSD SCL 1.7 versions
+name: Check SCL XSD 2007B4 version
 
 on: push
-
 #  schedule:
 #    - cron:  '0 0 * * 0' # “At 00:00 on Sunday.”
 
 jobs:
   check_newer_version_job:
     runs-on: ubuntu-latest
-    name: Checking for newer versions of the SCL XSD 1.7 schemas. 
+    name: Checking for newer versions of the SCL XSD 2007B4 schemas. 
     steps:
       - name: Check for difference in checksum.
         id: verify
         uses: Flurb/verify-file-checksum-action@v1
         with:
-          file: 'https://assets.iec.ch/public/tc57/IEC_61850-6.2003.SCL.1.7.full.zip'
-          checksum: '2f912148b013350e6d09ffce64866d9a'
+          file: 'https://assets.iec.ch/public/tc57/IEC_61850-6.2018.SCL.2007B4.full.zip'
+          checksum: 'd61da94836ff974fbd781ad1bc967039'
           algorithm: 'md5'
       - name: Get the output
         run: echo "${{ steps.verify.outputs.verify-result }}"
