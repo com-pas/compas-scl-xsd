@@ -13,7 +13,7 @@ jobs:
         id: verify
         uses: Flurb/verify-file-checksum-action@v1
         with:
-          file: 'https://assets.iec.ch/public/tc57/IEC_61850-6.2009.SCL.2007B.full.zip'
+          fileUrl: 'https://assets.iec.ch/public/tc57/IEC_61850-6.2009.SCL.2007B.full.zip'
           checksum: '13dc10768c4ac8d58fcf70491eec3f3d'
           algorithm: 'md5'
       - name: Get the verify result
