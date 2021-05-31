@@ -3,3 +3,8 @@ build
 
 .gradle
 .project
+
+# IDE specific
+.vscode/
+.idea
+*.iml
