@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns="https://www.lfenergy.org/compas/v1" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+    <xs:simpleType name="tSclFilename">
+        <xs:annotation>
+            <xs:documentation>Name of the SCL configuration file, extension excluded</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:normalizedString"/>
+    </xs:simpleType>
+    <xs:simpleType name="tSclFileType">
+        <xs:annotation>
+            <xs:documentation>File type of the SCL configuration file</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:Name">
+            <xs:enumeration value="SSD">
+                <xs:annotation>
+                    <xs:documentation>Substation Specification Description</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="IID">
+                <xs:annotation>
+                    <xs:documentation>IED Instance Description</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="ICD">
+                <xs:annotation>
+                    <xs:documentation>IED Capability Description</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="SCD">
+                <xs:annotation>
+                    <xs:documentation>Substation Configuration Description</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="CID">
+                <xs:annotation>
+                    <xs:documentation>Configured IED Description</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="SED">
+                <xs:annotation>
+                    <xs:documentation>System Exchange Description</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="ISD">
+                <xs:annotation>
+                    <xs:documentation>IED Specification Description</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+        </xs:restriction>
+    </xs:simpleType>
+</xs:schema>

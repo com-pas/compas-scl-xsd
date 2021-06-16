@@ -3,6 +3,7 @@ build
 
 .gradle
 .project
+.DS_Store
 
 # IDE specific
 .vscode/
