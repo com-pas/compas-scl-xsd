@@ -1,11 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xs:schema xmlns="https://www.lfenergy.org/compas/v1" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+	<xs:annotation>
+    	<xs:documentation xml:lang="en">
+			COPYRIGHT (c) 2021 Alliander N.V.
+		</xs:documentation>
+		<xs:documentation xml:lang="en">
+			Version 1.0 Release 2021/06/16
+		</xs:documentation>
+	</xs:annotation>
+	<!-- 
+    SCL Filename element.
+	-->
     <xs:simpleType name="tSclFilename">
         <xs:annotation>
             <xs:documentation>Name of the SCL configuration file, extension excluded</xs:documentation>
         </xs:annotation>
         <xs:restriction base="xs:normalizedString"/>
     </xs:simpleType>
+	<xs:element name="Filename" type="tSclFilename"/>
+	<!-- 
+    SCL File Type element.
+	-->
     <xs:simpleType name="tSclFileType">
         <xs:annotation>
             <xs:documentation>File type of the SCL configuration file</xs:documentation>
@@ -48,4 +63,5 @@
             </xs:enumeration>
         </xs:restriction>
     </xs:simpleType>
+	<xs:element name="FileType" type="tSclFileType"/>
 </xs:schema>
