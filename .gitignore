@@ -3,6 +3,7 @@ build
 
 .gradle
 .project
+target
 
 # IDE specific
 .vscode/
