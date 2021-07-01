@@ -1,4 +1,4 @@
-name: GitHub Packages with Gradle
+name: GitHub Packages with Maven
 
 on:
   push:
@@ -18,8 +18,7 @@ jobs:
         with:
           java-version: '11'
           distribution: 'adopt'
-      - name: Publish package
-        run: gradle publish
+      - name: Deploy with Maven
+        run: mvn -B clean deploy
         env:
-          GITHUB_USERNAME: "OWNER"
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
