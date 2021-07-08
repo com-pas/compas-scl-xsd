@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: 2021 Alliander N.V.
+#
+# SPDX-License-Identifier: Apache-2.0
+
 name: Add issues and pull request to project boards
 
 on: [ issues, pull_request ]
