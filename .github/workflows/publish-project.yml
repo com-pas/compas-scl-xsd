@@ -26,10 +26,10 @@ jobs:
           java-version: '11'
           distribution: 'adopt'
       - name: Set version with Maven
-        run: mvn -B versions:set -DnewVersion=${{ steps.extract_tagname.outputs.tagname }}
+        run: mvn -B versions:set -DprocessAllModules=true -DnewVersion=${{ steps.extract_tagname.outputs.tagname }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-#      - name: Deploy with Maven to GitHub Packages
-#        run: mvn -B clean deploy
-#        env:
-#          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Deploy with Maven to GitHub Packages
+        run: mvn -B clean deploy
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
