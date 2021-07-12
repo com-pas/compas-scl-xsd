@@ -17,7 +17,7 @@ SPDX-License-Identifier: Apache-2.0
 
     <distributionManagement>
         <repository>
-            <id>github</id>
+            <id>github-packages-compas</id>
             <name>GitHub Packages</name>
             <url>https://maven.pkg.github.com/com-pas/compas-scl-xsd</url>
         </repository>
