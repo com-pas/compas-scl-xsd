@@ -6,9 +6,6 @@ name: Maven Build
 
 on:
   push:
-    branches-ignore:
-      - main
-      - develop
 
 jobs:
   build:

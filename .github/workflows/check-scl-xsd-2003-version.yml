@@ -11,7 +11,7 @@ on:
 jobs:
   check_newer_version_job:
     runs-on: ubuntu-latest
-    name: Checking for newer versions of the SCL XSD 1.7 schemas. 
+    name: Checking for newer versions of the SCL XSD 2003 (aka 1.7) schemas.
     steps:
       - name: Check for difference in checksum.
         id: verify
