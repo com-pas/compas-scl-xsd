@@ -2,7 +2,7 @@
 #
 # SPDX-License-Identifier: Apache-2.0
 
-name: GitHub Packages with Maven
+name: Publish Project
 
 on:
   release:
@@ -29,7 +29,7 @@ jobs:
         run: mvn -B versions:set -DnewVersion=${{ steps.extract_tagname.outputs.tagname }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-#      - name: Deploy with Maven
+#      - name: Deploy with Maven to GitHub Packages
 #        run: mvn -B clean deploy
 #        env:
 #          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
