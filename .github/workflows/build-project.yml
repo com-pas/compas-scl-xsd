@@ -2,13 +2,10 @@
 #
 # SPDX-License-Identifier: Apache-2.0
 
-name: Maven Build
+name: Build Project
 
 on:
   push:
-    branches-ignore:
-      - main
-      - develop
 
 jobs:
   build:

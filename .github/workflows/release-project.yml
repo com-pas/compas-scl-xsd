@@ -1,0 +1,35 @@
+# SPDX-FileCopyrightText: 2021 Alliander N.V.
+#
+# SPDX-License-Identifier: Apache-2.0
+
+name: Release Project
+
+on:
+  release:
+    types: [released]
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest 
+    permissions: 
+      contents: read
+      packages: write 
+    steps:
+      - uses: actions/checkout@v2
+      - name: Extract tag name
+        id: extract_tagname
+        shell: bash
+        # Extra the tagname form the git reference, value of GITHUB_REF will be something like refs/tags/<tag_name>.
+        run: echo "##[set-output name=tagname;]$(echo ${GITHUB_REF##*/})"
+      - uses: actions/setup-java@v2
+        with:
+          java-version: '11'
+          distribution: 'adopt'
+      - name: Set version with Maven
+        run: mvn -B versions:set -DprocessAllModules=true -DnewVersion=${{ steps.extract_tagname.outputs.tagname }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Deploy with Maven to GitHub Packages
+        run: mvn -B -Prelease clean deploy
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
