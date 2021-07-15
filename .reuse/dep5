@@ -6,3 +6,7 @@ Source: https://github.com/com-pas/compas-cim-mapping
 Files: src/main/resources/xsd/*
 Copyright: 2021 Alliander N.V.
 License: LicenseRef-CCEula
+
+Files: .mvn/wrapper/*
+Copyright: 2021 Alliander N.V.
+License: Apache-2.0
