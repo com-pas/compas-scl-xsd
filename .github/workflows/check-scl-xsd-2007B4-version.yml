@@ -15,7 +15,7 @@ jobs:
     steps:
       - name: Check for difference in checksum.
         id: verify
-        uses: Flurb/verify-file-checksum-action@v1
+        uses: Flurb/verify-file-checksum-action@v2
         with:
           fileUrl: 'https://assets.iec.ch/public/tc57/IEC_61850-6.2018.SCL.2007B4.full.zip'
           checksum: 'd61da94836ff974fbd781ad1bc967039'
