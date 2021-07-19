@@ -4,9 +4,7 @@
 
 name: Check SCL XSD 2007B version
 
-on:
-  schedule:
-    - cron:  '0 0 * * 0' # “At 00:00 on Sunday.”
+on: push
 
 jobs:
   check_newer_version_job:
@@ -15,7 +13,7 @@ jobs:
     steps:
       - name: Check for difference in checksum.
         id: verify
-        uses: Flurb/verify-file-checksum-action@v1
+        uses: Flurb/verify-file-checksum-action@v2
         with:
           fileUrl: 'https://assets.iec.ch/public/tc57/IEC_61850-6.2009.SCL.2007B.full.zip'
           checksum: '13dc10768c4ac8d58fcf70491eec3f3d'
