@@ -26,11 +26,16 @@ jobs:
         with:
           distribution: 'zulu'
           java-version: '11'
+      - name: Create custom Maven Settings.xml
+        uses: whelk-io/maven-settings-xml-action@v18
+        with:
+          output_file: custom_maven_settings.xml
+          servers: '[{ "id": "github-packages-compas", "username": "OWNER", "password": "${{ secrets.GITHUB_TOKEN }}" }]'
       - name: Set version with Maven
         run: ./mvnw -B versions:set -DprocessAllModules=true -DnewVersion=${{ steps.extract_tagname.outputs.tagname }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Deploy with Maven to GitHub Packages
-        run: ./mvnw -B -Prelease clean deploy
+        run: ./mvnw -B -s custom_maven_settings.xml -Prelease clean deploy
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
