@@ -1,5 +1,15 @@
+# SPDX-FileCopyrightText: 2021 Alliander N.V.
+#
+# SPDX-License-Identifier: Apache-2.0
+
 # Ignore Gradle build output directory
 build
 
 .gradle
 .project
+target
+
+# IDE specific
+.vscode/
+.idea
+*.iml

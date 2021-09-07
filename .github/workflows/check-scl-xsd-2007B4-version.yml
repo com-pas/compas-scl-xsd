@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: 2021 Alliander N.V.
+#
+# SPDX-License-Identifier: Apache-2.0
+
 name: Check SCL XSD 2007B4 version
 
 on:
@@ -11,9 +15,9 @@ jobs:
     steps:
       - name: Check for difference in checksum.
         id: verify
-        uses: Flurb/verify-file-checksum-action@v1
+        uses: Flurb/verify-file-checksum-action@v2
         with:
-          file: 'https://assets.iec.ch/public/tc57/IEC_61850-6.2018.SCL.2007B4.full.zip'
+          fileUrl: 'https://assets.iec.ch/public/tc57/IEC_61850-6.2018.SCL.2007B4.full.zip'
           checksum: 'd61da94836ff974fbd781ad1bc967039'
           algorithm: 'md5'
       - name: Get the verify result

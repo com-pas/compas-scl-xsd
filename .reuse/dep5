@@ -1,0 +1,12 @@
+Format: https://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
+Upstream-Name: compas-cim-mapping
+Upstream-Contact: Rob Tjalma <rob@tjalma.com>
+Source: https://github.com/com-pas/compas-cim-mapping
+
+Files: src/main/resources/xsd/*
+Copyright: 2021 Alliander N.V.
+License: LicenseRef-CCEula
+
+Files: .mvn/wrapper/*
+Copyright: 2021 Alliander N.V.
+License: Apache-2.0
