@@ -27,7 +27,7 @@ jobs:
           distribution: 'zulu'
           java-version: '11'
       - name: Create custom Maven Settings.xml
-        uses: whelk-io/maven-settings-xml-action@v18
+        uses: whelk-io/maven-settings-xml-action@v20
         with:
           output_file: custom_maven_settings.xml
           servers: '[{ "id": "github-packages-compas", "username": "OWNER", "password": "${{ secrets.GITHUB_TOKEN }}" }]'
