@@ -6,6 +6,7 @@ SPDX-License-Identifier: Apache-2.0
 
 [![Maven Build Github Action Status](<https://img.shields.io/github/workflow/status/com-pas/compas-scl-xsd/Maven%20Build?logo=GitHub>)](https://github.com/com-pas/compas-scl-xsd/actions?query=workflow%3A%22Maven+Build%22)
 [![REUSE status](https://api.reuse.software/badge/github.com/com-pas/compas-scl-xsd)](https://api.reuse.software/info/github.com/com-pas/compas-scl-xsd)
+[![CII Best Practices](https://bestpractices.coreinfrastructure.org/projects/5925/badge)](https://bestpractices.coreinfrastructure.org/projects/5925)
 [![Slack](https://raw.githubusercontent.com/com-pas/compas-architecture/master/public/LFEnergy-slack.svg)](http://lfenergy.slack.com/)
 
 # CoMPAS SCL XSD Repository
