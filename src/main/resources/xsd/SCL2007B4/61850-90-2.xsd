@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:scl="http://www.iec.ch/61850/2003/SCL" xmlns:eTr-IEC61850-90-2="http://www.iec.ch/61850-90-2/2015/SCL" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" targetNamespace="http://www.iec.ch/61850-90-2/2015/SCL" elementFormDefault="qualified" attributeFormDefault="unqualified" version="2015A1">
+	<xs:annotation>
+		<xs:documentation xml:lang="en">SSCC schema version "2015" revision "A" release "1", for IEC 61850-90-2 Ed. 1.0. Draft 2015-02-27. The schema imports the SCL schema "2007" revision "B" release 1, for IEC 61850-6 Ed. 2.1. Draft 2014-07-18. COPYRIGHT (c) IEC, 2015. All rights reserved. Disclaimer: The IEC disclaims liability for any personal injury, property or other damages of any nature whatsoever, whether special, indirect, consequential or compensatory, directly or indirectly resulting from this software and the document upon which its methods are based, use of, or reliance upon.
+		</xs:documentation>
+	</xs:annotation>
+	<xs:import namespace="http://www.iec.ch/61850/2003/SCL" schemaLocation="SCL.xsd"/>
+	<xs:complexType name="tExternalSCL">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">SCL file name containing the definition of a referenced SCL element.</xs:documentation>
+		</xs:annotation>
+		<xs:attribute name="name" use="required">
+			<xs:simpleType>
+				<xs:restriction base="xs:normalizedString">
+					<xs:minLength value="1"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+		<xs:attribute name="file" use="required">
+			<xs:simpleType>
+				<xs:restriction base="xs:anyURI">
+					<xs:minLength value="1"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+		<xs:attribute name="id" use="optional">
+			<xs:simpleType>
+				<xs:restriction base="xs:normalizedString">
+					<xs:minLength value="1"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+		<xs:attribute name="version" use="optional">
+			<xs:simpleType>
+				<xs:restriction base="xs:normalizedString">
+					<xs:minLength value="1"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+		<xs:attribute name="revision" use="optional">
+			<xs:simpleType>
+				<xs:restriction base="xs:normalizedString"> 
+					<xs:minLength value="1"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:complexType name="tRedundancyModes">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">Describes the capabilities of a redundant IEC61850 client</xs:documentation>
+		</xs:annotation>
+		<xs:attribute name="noRedundancy" type="xs:boolean" use="optional" default="true"/>
+		<xs:attribute name="acccessPointRedundancy" type="xs:boolean" use="optional" default="false"/>
+		<xs:attribute name="deviceRedundancy" type="xs:boolean" use="optional" default="false"/>
+		<xs:attribute name="multipleRedundancy" type="xs:boolean" use="optional" default="false"/>
+	</xs:complexType>
+	<xs:complexType name="tLinkModes">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">Describes the supported link states of a redundant IEC61850 connection</xs:documentation>
+		</xs:annotation>
+		<xs:attribute name="active" type="xs:boolean" use="optional" default="false"/>
+		<xs:attribute name="standby" type="xs:boolean" use="optional" default="false"/>
+		<xs:attribute name="supervised" type="xs:boolean" use="optional" default="false"/>
+		<xs:attribute name="off" type="xs:boolean" use="optional" default="true"/>
+	</xs:complexType>
+	<xs:complexType name="tClientRedundancyServices">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">Service section for redundancy support according to IEC 61850-90-2</xs:documentation>
+		</xs:annotation>
+		<xs:all>
+			<xs:element name="RedundancyModes" type="eTr-IEC61850-90-2:tRedundancyModes" minOccurs="0"/>
+			<xs:element name="LinkModes" type="eTr-IEC61850-90-2:tLinkModes" minOccurs="0"/>
+			<xs:element name="CooperatingClients" type="xs:boolean" default="false" minOccurs="0"/>
+		</xs:all>
+	</xs:complexType>
+	<xs:complexType name="tProxyRef">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">Express relation between LN/DO/DOI in Proxy/Gateway Server and IED.</xs:documentation>
+		</xs:annotation>
+		<xs:attribute name="externalScl" use="optional">
+			<xs:simpleType>
+				<xs:restriction base="xs:normalizedString">
+					<xs:minLength value="1"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+		<xs:attribute name="iedName" type="scl:tIEDName" use="required"/>
+		<xs:attribute name="ldInst" type="scl:tLDInst" use="required"/>
+		<xs:attribute name="prefix" type="scl:tPrefix" use="optional" default=""/>
+		<xs:attribute name="lnClass" type="scl:tLNClassEnum" use="required"/>
+		<xs:attribute name="lnInst" type="scl:tLNInst" use="optional"/>
+		<xs:attribute name="doName" type="scl:tFullDOName" use="optional"/>
+		<xs:attribute name="daName" type="scl:tFullAttributeName" use="optional"/>
+		<xs:attribute name="fc" type="scl:tFCEnum" use="optional"/>
+		<xs:attribute name="ix" type="xs:unsignedInt" use="optional"/>
+	</xs:complexType>
+	<xs:complexType name="tRedundantServerTo">
+		<xs:annotation>
+			<xs:documentation>Describes the reference to a server access point in another IED and allows to override instance values</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="LDeviceOverride" type="scl:tLDevice" minOccurs="0" maxOccurs="unbounded">
+				<xs:unique name="uniqueLNInLDeviceOverride">
+					<xs:selector xpath="./scl:LN"/>
+					<xs:field xpath="@inst"/>
+					<xs:field xpath="@lnClass"/>
+					<xs:field xpath="@prefix"/>
+				</xs:unique>
+			</xs:element>
+			<xs:element name="Association" type="scl:tAssociation" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<xs:attribute name="iedName" type="scl:tIEDName" use="required"/>
+		<xs:attribute name="apName" type="scl:tAccessPointName" use="required"/>
+		<xs:attribute name="timeout" type="xs:unsignedInt" use="optional" default="30"/>
+	</xs:complexType>
+	<xs:complexType name="tAccessPointRef">
+		<xs:annotation>
+			<xs:documentation>Describes the reference to an access point in another IED</xs:documentation>
+		</xs:annotation>
+		<xs:attribute name="iedName" type="scl:tIEDName" use="required"/>
+		<xs:attribute name="apName" type="scl:tAccessPointName" use="required"/>
+	</xs:complexType>
+	<xs:simpleType name="tLinkModeEnum">
+		<xs:annotation>
+			<xs:documentation>Enumeration for the possibel operation modes of a non active communication link</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:Name">
+			<xs:enumeration value="Standby"/>
+			<xs:enumeration value="Supervised"/>
+			<xs:enumeration value="Off"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:element name="ExternalSCL" type="eTr-IEC61850-90-2:tExternalSCL">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">SCL file name: containing referenced SCL elements. To be included in a Private with type "eTr-IEC61850-90-2" below the root SCL element.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="RedundancyModes" type="eTr-IEC61850-90-2:tRedundancyModes">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">Describes the capabilities of a redundant IEC61850 client. Element in ClientRedundancyServices</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="LinkModes" type="eTr-IEC61850-90-2:tLinkModes">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">Describes the supported link states of a redundant IEC61850 connection. Element in ClientRedundancyServices</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="ClientRedundancyServices" type="eTr-IEC61850-90-2:tClientRedundancyServices">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">Service section for redundancy support according to IEC 61850-90-2. To be included in a Private with type "eTr-IEC61850-90-2" below the "AccesPoint" SCL element.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="ProxyOf" type="eTr-IEC61850-90-2:tProxyRef">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">Express relation between LN/DO/DOI in Proxy/Gateway Server and IED. To be included in a Private with type "eTr-IEC61850-90-2" below the SCL element.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="RedundantServerTo" type="eTr-IEC61850-90-2:tRedundantServerTo">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">Express Relation between Servers for redundancy. To be included in a Private with type "eTr-IEC61850-90-2" below the "AccessPoint" SCL element.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="RedundantClientTo" type="eTr-IEC61850-90-2:tAccessPointRef">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">Express Relation between Clients for redundancy. To be included in a Private with type "eTr-IEC61850-90-2" below the "AccessPoint" SCL element.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="StandbyLinkMode" type="eTr-IEC61850-90-2:tLinkModeEnum">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">Configured operation mode of the communication link(s) when not the preferred link. To be included in a Private with type "eTr-IEC61850-90-2" below the "AccessPoint" SCL element.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+</xs:schema>

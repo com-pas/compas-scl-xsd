@@ -1,0 +1,35 @@
+<xs:schema targetNamespace="http://www.iec.ch/61850-80-1/2007/IEC_60870-5-104"
+           xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://www.iec.ch/61850-80-1/2007/IEC_60870-5-104"
+           elementFormDefault="qualified" attributeFormDefault="unqualified" finalDefault="extension" version="1.0">
+    <xs:annotation>
+        <xs:documentation xml:lang="en">COPYRIGHT IEC, 2007. Version 1.0.</xs:documentation>
+    </xs:annotation>
+    <xs:simpleType name="enumUsedBy">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="controlled-station"/>
+            <xs:enumeration value="controlling-station"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="enumCheck">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="interlocking"/>
+            <xs:enumeration value="synchrocheck"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:complexType name="tIEC_60870_5_104Address">
+        <xs:attribute name="casdu" type="xs:unsignedInt"/>
+        <xs:attribute name="ioa" type="xs:unsignedInt"/>
+        <xs:attribute name="ti" type="xs:unsignedInt"/>
+        <xs:attribute name="usedBy" type="enumUsedBy" use="optional" default="controlled-station"/>
+        <xs:attribute name="expectedValue" type="xs:integer" use="optional"/>
+        <xs:attribute name="inverted" type="xs:boolean" use="optional"/>
+        <!--scaleMultiplier and scaleOffset are optional for mapping of values -->
+        <xs:attribute name="scaleMultiplier" type="xs:float" use="optional" default="1.0"/>
+        <xs:attribute name="scaleOffset" type="xs:float" use="optional" default="0.0"/>
+        <!--Unit-Multiplier is optional for mapping of values -->
+        <xs:attribute name="unitMultiplier" type="xs:unsignedInt" use="optional" default="0"/>
+        <!--check is optional for control services defining interlock check and synchro check -->
+        <xs:attribute name="check" type="enumCheck" use="optional"/>
+    </xs:complexType>
+    <xs:element name="Address" type="tIEC_60870_5_104Address"/>
+</xs:schema>
