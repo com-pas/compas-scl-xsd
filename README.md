@@ -15,5 +15,7 @@ Contains the official IEC 61850-6 SCL XSD schemas.
 ## License
 The XSD schemas used are distributed under their [end user license agreement](./license/CC-EULA.pdf).
 
+Some of the files in this repository are subject to the CC-EULA License. Please check the [disclaimer](./src/main/resources/xsd/Disclaimer.md) to see what this means.
+
 ## How to use these XSD schemas
 The artifact is being hosted on our [Github Packages](https://github.com/orgs/com-pas/packages) platform.
